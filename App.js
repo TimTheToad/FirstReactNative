@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import WelcomeScreen from './App/Screens/WelcomeScreen';
 import ProfileScreen from './App/Screens/ProfileScreen';
+import MemoriesScreen from './App/Screens/MemoriesScreen';
 
 
 const Stack = createStackNavigator();
@@ -21,7 +22,8 @@ export default function App()
     <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Welcome"component={WelcomeScreen} options={{ headerShown: false  }}/>
-          <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: 'Welcome', headerMode: false }}/>
+          <Stack.Screen name="Profile" component={ProfileScreen} options={{ title: 'Welcome', headerShown: false  }}/>
+          <Stack.Screen name="Memories" component={MemoriesScreen} options={{ title: 'Memories', headerShown: false  }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

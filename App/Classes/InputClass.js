@@ -24,7 +24,7 @@ class Inputs extends Component {
             <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "What's on your mind today, Tim?"
-               placeholderTextColor = "#8aceff"
+               placeholderTextColor = "black"
                autoCapitalize = "none"
                multiline
                numberOfLines={5} 
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
       margin: 15,
       padding: 5,
       height: 40,
-      borderColor: colors.primary,
+      borderColor: "black",
       borderWidth: 1
    },
    submitButton: {
