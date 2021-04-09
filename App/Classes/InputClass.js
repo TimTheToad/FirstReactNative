@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import colors from "../config/colors";
 
@@ -7,20 +8,37 @@ class Inputs extends Component {
 
    state = {
       message: '',
+      savedMessage: '',
    }
 
    handleMessage = (text) => {
       this.setState({ message: text })
    }
 
-   submitMessage = (message) => {
-      alert('email: ' + message)
+   onSubmitMessage = async => {
+      try {
+         this.setState({ savedMessage : this.state.message})
+      AsyncStorage.setItem('savedMessage', this.state.message)
+      } catch(err) {
+         console.log(err)
+      }
    }
+
+   getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem('TASKS');
+        if (value !== null) {
+            this.setState({savedMessage: value})
+        }
+      } catch (err) {
+        // Error retrieving data
+      }
+    };
 
    render() {
       return (
          <View style = {styles.container}>
-            
+            <Text>{this.state.savedMessage}</Text>
             <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "What's on your mind today, Tim?"
@@ -33,7 +51,7 @@ class Inputs extends Component {
             <TouchableOpacity
                style = {styles.submitButton}
                onPress = {
-                  () => this.submitMessage(this.state.message)
+                  () => this.onSubmitMessage(this.state.message)
                }>
                <Text style = {styles.submitButtonText}> Submit </Text>
             </TouchableOpacity>
@@ -63,6 +81,7 @@ const styles = StyleSheet.create({
       alignContent: "center",
       alignItems: "center",
       borderRadius: 10,
+      elevation: 5,
    },
    submitButtonText:{
       color: 'black'

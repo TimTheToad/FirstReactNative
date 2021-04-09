@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { View, StyleSheet, ImageBackground, Text, TouchableWithoutFeedback, Keyboard, TouchableOpacity} from 'react-native';
 
+
 import Inputs from "../Classes/InputClass";
 import colors from "../config/colors";
 import { TextInput } from 'react-native-gesture-handler';
@@ -21,12 +22,9 @@ function ProfileScreen({ navigation, route }) {
                     <Inputs></Inputs>
                 </View>
                 <View style={styles.profileBottom}>
-                    <TouchableOpacity
-                    style = {styles.memoriesButton}
-                    onPress={() => navigation.navigate('Memories')}
-                    >
+                    <TouchableOpacity style = {styles.memoriesButton} onPress={() => navigation.navigate('Memories')}>
                         <Text style = {styles.memoriesButtonText}> My Memories </Text>
-                </TouchableOpacity>
+                    </TouchableOpacity>
                 </View>
         </ImageBackground>
     </TouchableWithoutFeedback>
@@ -69,8 +67,8 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "50%",
         flexDirection: "row",
-        alignContent: "flex-end",
-        alignItems: "flex-end",
+        alignContent: "center",
+        alignItems: "center",
         justifyContent: "center",
         
     },
@@ -82,6 +80,7 @@ const styles = StyleSheet.create({
         alignContent: "center",
         alignItems: "center",
         borderRadius: 10,
+        elevation: 5,
 
     },
     memoriesButtonText: {

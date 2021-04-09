@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "DoneWithIt",
-    "slug": "DoneWithIt",
+    "name": "MyFirstReact",
+    "slug": "myfirstreact",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./App/assets/icon.png",
@@ -28,6 +28,7 @@
     "web": {
       "favicon": "./App/assets/favicon.png"
     },
-    "description": "Following a Tutorial"
+    "description": "",
+    "githubUrl": "https://github.com/TimTheToad/FirstReactNative.git"
   }
 }
