@@ -3,22 +3,44 @@ import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-nativ
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import colors from "../config/colors";
+import { FlatList } from 'react-native-gesture-handler';
 
 class Inputs extends Component {
 
-   state = {
-      message: '',
-      savedMessage: '',
+
+
+   constructor(props) {
+      super(props);
+
+      this.state = {
+         message: '',
+         date: '',
+         savedMessage: '',
+         messageArray: [],
+      };
+
+      this.getData();
    }
 
    handleMessage = (text) => {
       this.setState({ message: text })
    }
 
-   onSubmitMessage = async => {
+   onSubmitMessage = async () => {
       try {
-         this.setState({ savedMessage : this.state.message})
-      AsyncStorage.setItem('savedMessage', this.state.message)
+         await this.setState(state => {
+            this.state.messageArray.push(state.message);
+         })
+         await AsyncStorage.setItem('messageArray', JSON.stringify({messageArray: this.state.messageArray}));
+         console.log(this.state.message + " was added to the array");
+      } catch(err) {
+         console.log(err)
+      }
+   }
+
+   onCheckContent = async () => {
+      try {
+         this.state.messageArray.map(item => (console.log(item)));
       } catch(err) {
          console.log(err)
       }
@@ -26,9 +48,17 @@ class Inputs extends Component {
 
    getData = async () => {
       try {
-        const value = await AsyncStorage.getItem('TASKS');
-        if (value !== null) {
-            this.setState({savedMessage: value})
+
+
+        //const value = await AsyncStorage.getItem('savedMessage');
+         const savedmessage = await AsyncStorage.getItem('messageArray');
+         const savedMessage = JSON.parse(savedmessage);
+
+        if (savedMessage !== null) {
+            this.setState({
+               ...savedMessage
+            })
+            console.log("Sucess!" + this.state.messageArray[0]);
         }
       } catch (err) {
         // Error retrieving data
@@ -38,7 +68,7 @@ class Inputs extends Component {
    render() {
       return (
          <View style = {styles.container}>
-            <Text>{this.state.savedMessage}</Text>
+
             <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "What's on your mind today, Tim?"
@@ -55,6 +85,19 @@ class Inputs extends Component {
                }>
                <Text style = {styles.submitButtonText}> Submit </Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+               style = {styles.checkContentButton}
+               onPress = {this.onCheckContent}>
+               <Text style = {styles.submitButtonText}> Check Content </Text>
+            </TouchableOpacity>
+
+
+            <View syle = {styles.listContainer} >{
+            this.state.messageArray.map(item => (
+               <Text key={item} syle = {styles.listContainer}>{item}</Text>
+            ))}
+            </View >
          </View>
       )
    }
@@ -62,6 +105,16 @@ class Inputs extends Component {
 export default Inputs
 
 const styles = StyleSheet.create({
+   checkContentButton: {
+      backgroundColor: "#faffd6",
+      padding: 10,
+      margin: 15,
+      width: 150,
+      alignContent: "center",
+      alignItems: "center",
+      borderRadius: 10,
+      elevation: 5,
+   },
    container: {
       paddingTop: 23,
       alignItems: "flex-end"
@@ -85,5 +138,10 @@ const styles = StyleSheet.create({
    },
    submitButtonText:{
       color: 'black'
+   },
+   listContainer: {
+      backgroundColor: "white",
+      width: 100,
+      height: 100,
    }
 })
