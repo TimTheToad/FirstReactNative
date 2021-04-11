@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ImageBackground, Text, TouchableWithoutFeedback, Keyboard, TouchableOpacity} from 'react-native';
-import App from '../../App';
+
+import Memories from "../Classes/MemoriesClass";
 
 const AppButton = ({ onPress, title, backgroundColor }) => (
     <TouchableOpacity 
@@ -20,7 +21,7 @@ function MemoriesScreen({navigation}) {
                 <AppButton title="Go Back" onPress={() => navigation.navigate('Profile')}></AppButton>
             </View>
             <View style = {styles.memoriesWall}>
-
+                <Memories></Memories>
             </View>
         </ImageBackground>
     );
@@ -39,6 +40,10 @@ const styles = StyleSheet.create({
         borderColor: "black",
         borderRadius: 25,
         borderWidth: 5,
+        alignContent: "flex-start",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        padding: 10,
     },
     topButtonContainer: {
         width: "95%",

@@ -6,9 +6,7 @@ import colors from "../config/colors";
 import { FlatList } from 'react-native-gesture-handler';
 
 class Inputs extends Component {
-
-
-
+   
    constructor(props) {
       super(props);
 
@@ -45,6 +43,10 @@ class Inputs extends Component {
          console.log(err)
       }
    }
+   onClearContent = async () => {
+      console.log("Clearing Content");
+      AsyncStorage.clear();
+   }
 
    getData = async () => {
       try {
@@ -78,26 +80,27 @@ class Inputs extends Component {
                numberOfLines={5} 
                onChangeText = {this.handleMessage}
                />
-            <TouchableOpacity
-               style = {styles.submitButton}
-               onPress = {
-                  () => this.onSubmitMessage(this.state.message)
-               }>
-               <Text style = {styles.submitButtonText}> Submit </Text>
-            </TouchableOpacity>
+            <View style= {styles.buttonContainer}> 
+               <TouchableOpacity
+                  style = {styles.submitButton}
+                  onPress = {
+                     () => this.onSubmitMessage(this.state.message)
+                  }>
+                  <Text style = {styles.submitButtonText}> Submit </Text>
+               </TouchableOpacity>
 
-            <TouchableOpacity
-               style = {styles.checkContentButton}
-               onPress = {this.onCheckContent}>
-               <Text style = {styles.submitButtonText}> Check Content </Text>
-            </TouchableOpacity>
+               <TouchableOpacity
+                  style = {styles.checkContentButton}
+                  onPress = {this.onCheckContent}>
+                  <Text style = {styles.submitButtonText}> Check Content </Text>
+               </TouchableOpacity>
 
-
-            <View syle = {styles.listContainer} >{
-            this.state.messageArray.map(item => (
-               <Text key={item} syle = {styles.listContainer}>{item}</Text>
-            ))}
-            </View >
+               <TouchableOpacity
+                  style = {styles.checkContentButton}
+                  onPress = {this.onClearContent}>
+                  <Text style = {styles.submitButtonText}> Clear Content </Text>
+               </TouchableOpacity>
+            </View>
          </View>
       )
    }
@@ -105,6 +108,12 @@ class Inputs extends Component {
 export default Inputs
 
 const styles = StyleSheet.create({
+   buttonContainer: {
+      alignItems: "center",
+      justifyContent: "space-evenly",
+      flexDirection: "row",
+      width: "100%"
+   },
    checkContentButton: {
       backgroundColor: "#faffd6",
       padding: 10,
